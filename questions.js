@@ -79,5 +79,85 @@ const QUESTIONS = [
     answer: 3,
     explanation: "4·19 혁명은 3·15 부정 선거에 대한 분노로 번진 시위로, 이승만은 1960년 4월 26일 사임을 발표했다.",
     source: { name: "한국민족문화대백과사전 '4·19혁명' 항목", url: "https://encykorea.aks.ac.kr/Article/E0025902" }
+  },
+  {
+    id: "wg-01", category: "세계지리",
+    question: "1909년 새 수도 부지로 정해졌고, 1927년 연방 의회가 옮겨 온 오스트레일리아의 수도는?",
+    choices: ["시드니", "멜버른", "캔버라", "퍼스"],
+    answer: 2,
+    explanation: "캔버라는 1909년 수도 부지로 선정되었고, 1927년 5월 9일 연방 의회가 멜버른에서 이곳으로 옮겨 왔다.",
+    source: { name: "브리태니커 'Canberra' 항목", url: "https://www.britannica.com/place/Canberra" }
+  },
+  {
+    id: "wg-02", category: "세계지리",
+    question: "칠레 북부에 펼쳐져 있으며, 남태평양 고기압과 페루(훔볼트) 해류의 영향으로 몹시 건조한 사막은?",
+    choices: ["사하라 사막", "고비 사막", "칼라하리 사막", "아타카마 사막"],
+    answer: 3,
+    explanation: "칠레 북부의 아타카마 사막은 남태평양 고기압의 하강 기류와 차가운 페루(훔볼트) 해류 때문에 세계에서 손꼽히게 건조한 지역이다.",
+    source: { name: "브리태니커 'Atacama Desert' 항목", url: "https://www.britannica.com/place/Atacama-Desert" }
+  },
+  {
+    id: "wg-03", category: "세계지리",
+    question: "쾨펜 기후 구분에서 여름은 덥고 건조하며 겨울은 서늘하고 비가 많고, 주로 위도 30°~45°의 대륙 서안에 나타나는 기후는?",
+    choices: ["서안 해양성 기후", "지중해성 기후", "온난 습윤 기후", "사바나 기후"],
+    answer: 1,
+    explanation: "지중해성 기후(Cs)는 여름에 아열대 고기압의 영향으로 맑고 덥고 건조하며, 겨울에는 이동성 저기압이 비를 내린다.",
+    source: { name: "브리태니커 'Mediterranean climate' 항목", url: "https://www.britannica.com/science/Mediterranean-climate" }
+  },
+  {
+    id: "wg-04", category: "세계지리",
+    question: "빙하가 깎아 만든 U자형 골짜기에 바닷물이 들어와 생긴 좁고 긴 만으로, 노르웨이 서해안에서 잘 볼 수 있는 지형은?",
+    choices: ["피오르", "리아스 해안", "석호", "삼각주"],
+    answer: 0,
+    explanation: "피오르는 빙하가 침식한 U자곡이 바다에 잠겨 생긴 좁고 긴 만으로, 노르웨이의 송네 피오르는 깊이가 1,308m에 이른다.",
+    source: { name: "브리태니커 'fjord' 항목", url: "https://www.britannica.com/science/fjord" }
+  },
+  {
+    id: "wg-05", category: "세계지리",
+    question: "독일 슈바르츠발트(검은 숲)에서 발원해 빈·부다페스트·베오그라드를 지나 흑해로 흘러드는 강은?",
+    choices: ["라인강", "다뉴브강(도나우강)", "볼가강", "엘베강"],
+    answer: 1,
+    explanation: "다뉴브강(도나우강)은 독일 슈바르츠발트에서 발원해 10개 나라를 지나 흑해로 흘러들며, 강가에 빈·부다페스트·베오그라드 같은 수도가 있다.",
+    source: { name: "브리태니커 'Danube River' 항목", url: "https://www.britannica.com/place/Danube-River" }
+  },
+  {
+    id: "wg-06", category: "세계지리",
+    question: "잠비아와 짐바브웨의 국경을 흐르는 잠베지강에 있으며, 현지에서 '모시오아툰야(천둥 치는 연기)'라고 불리는 폭포는?",
+    choices: ["이구아수 폭포", "나이아가라 폭포", "빅토리아 폭포", "앙헬 폭포"],
+    answer: 2,
+    explanation: "빅토리아 폭포는 잠베지강의 잠비아–짐바브웨 국경에 있으며, 1855년 이 폭포를 본 리빙스턴이 빅토리아 여왕의 이름을 붙였다.",
+    source: { name: "브리태니커 'Victoria Falls' 항목", url: "https://www.britannica.com/place/Victoria-Falls-waterfall-Zambia-Zimbabwe" }
+  },
+  {
+    id: "wg-07", category: "세계지리",
+    question: "흑해와 마르마라해를 잇고, 튀르키예의 아시아 쪽(아나톨리아)과 유럽 쪽을 가르는 해협은?",
+    choices: ["지브롤터 해협", "말라카 해협", "호르무즈 해협", "보스포루스 해협"],
+    answer: 3,
+    explanation: "보스포루스 해협은 흑해와 마르마라해를 잇는 길이 약 30km의 해협으로, 남쪽 끝에 이스탄불이 걸쳐 있다.",
+    source: { name: "브리태니커 'Bosporus' 항목", url: "https://www.britannica.com/place/Bosporus" }
+  },
+  {
+    id: "wg-08", category: "세계지리",
+    question: "1914년에 완공된 갑문식 운하인 파나마 운하가 파나마 지협을 가로질러 잇는 두 대양은?",
+    choices: ["대서양과 태평양", "대서양과 인도양", "인도양과 태평양", "태평양과 북극해"],
+    answer: 0,
+    explanation: "파나마 운하는 파나마 지협을 가로질러 대서양(카리브해)과 태평양을 잇는 갑문식 운하로, 1999년 12월 31일 파나마가 완전한 통제권을 넘겨받았다.",
+    source: { name: "브리태니커 'Panama Canal' 항목", url: "https://www.britannica.com/topic/Panama-Canal" }
+  },
+  {
+    id: "wg-09", category: "세계지리",
+    question: "UN 경제사회국(DESA) 추계 기준, 2023년에 중국을 앞질러 세계에서 인구가 가장 많은 나라가 된 것으로 추산된 나라는?",
+    choices: ["인도", "미국", "인도네시아", "파키스탄"],
+    answer: 0,
+    explanation: "UN 경제사회국 인구국은 2023년 4월 중국이 오랫동안 지켜 온 세계 최다 인구국 자리를 인도에 넘겨줄 것으로 추계했다.",
+    source: { name: "UN DESA 인구국 'India overtakes China as the world's most populous country'", url: "https://www.un.org/development/desa/pd/node/4293" }
+  },
+  {
+    id: "wg-10", category: "세계지리",
+    question: "인도 아대륙을 실은 판이 북쪽으로 이동해 어느 판과 충돌하면서 히말라야 산맥이 만들어졌는가?",
+    choices: ["태평양판", "유라시아판", "아프리카판", "남아메리카판"],
+    answer: 1,
+    explanation: "곤드와나에서 떨어져 나온 인도 아대륙은 약 4천만~5천만 년 전 유라시아와 충돌했고, 두 판의 충돌이 이어지면서 히말라야 산맥이 솟아올랐다.",
+    source: { name: "브리태니커 'Himalayas' 항목(Geologic history)", url: "https://www.britannica.com/place/Himalayas" }
   }
 ];
