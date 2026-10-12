@@ -237,6 +237,7 @@ const MODE_DESCRIPTIONS = {
   hint: "보기 2개를 지우는 힌트를 쓸 수 있어요. 힌트를 쓰고 맞히면 0.5점이에요."
 };
 const ROUND_SIZE = 10;
+const UNAVAILABLE_MSG = "이 브라우저에서는 기록을 저장할 수 없어요";
 
 function el(tag, props, text) {
   const node = document.createElement(tag);
@@ -274,7 +275,11 @@ function startApp(root, options) {
   const confirmFn = opts.confirm || window.confirm.bind(window);
 
   const now = opts.now || Date.now;
+  // 저장소는 시작할 때 한 번만 정한다. 테스트가 storage: null을 일부러 넘기므로 키 존재 여부로 판단한다.
+  const storage = "storage" in opts ? opts.storage : getStorage();
 
+  let boardCategory = CATEGORIES[0];
+  let boardMode = "speed";
   let screen = "start";
   let state = null;
   let message = "";
@@ -322,6 +327,7 @@ function startApp(root, options) {
     else if (screen === "category") renderCategory();
     else if (screen === "quiz") renderQuiz();
     else if (screen === "result") renderResult();
+    else if (screen === "board") renderBoard();
   }
 
   function renderStart() {
@@ -337,6 +343,57 @@ function startApp(root, options) {
       row.appendChild(el("p", { className: "mode-desc" }, MODE_DESCRIPTIONS[mode]));
       card.appendChild(row);
     });
+    const boardBtn = el("button", { type: "button", id: "board-btn", className: "board-link" }, "순위표 보기");
+    boardBtn.addEventListener("click", () => setScreen("board"));
+    card.appendChild(boardBtn);
+    root.appendChild(card);
+  }
+
+  function renderBoard() {
+    const card = el("div", { className: "card" });
+    card.appendChild(el("h1", null, "순위표"));
+
+    const cats = el("div", { className: "board-tabs" });
+    CATEGORIES.forEach(name => {
+      const b = el("button", { type: "button", "data-board-category": name }, name);
+      if (name === boardCategory) b.classList.add("active");
+      b.addEventListener("click", () => { boardCategory = name; render(); });
+      cats.appendChild(b);
+    });
+    card.appendChild(cats);
+
+    const modes = el("div", { className: "board-tabs" });
+    [["speed", "스피드"], ["hint", "힌트"]].forEach(([mode, label]) => {
+      const b = el("button", { type: "button", "data-board-mode": mode }, label);
+      if (mode === boardMode) b.classList.add("active");
+      b.addEventListener("click", () => { boardMode = mode; render(); });
+      modes.appendChild(b);
+    });
+    card.appendChild(modes);
+
+    const entries = getBoard(storage, boardCategory, boardMode);
+    if (!storage) {
+      card.appendChild(el("p", { className: "empty-msg" }, UNAVAILABLE_MSG));
+    } else if (entries.length === 0) {
+      card.appendChild(el("p", { className: "empty-msg" }, "아직 기록이 없어요"));
+    } else {
+      const list = el("div", { className: "board-list" });
+      entries.forEach((entry, i) => {
+        const row = el("div", { className: "board-row" });
+        row.appendChild(el("span", { className: "board-rank" }, (i + 1) + "위"));
+        row.appendChild(el("span", { className: "board-name" }, String(entry.name)));
+        row.appendChild(el("span", { className: "board-score" }, String(entry.score)));
+        row.appendChild(el("span", { className: "board-date" }, String(entry.date)));
+        list.appendChild(row);
+      });
+      card.appendChild(list);
+    }
+
+    const actions = el("div", { className: "actions" });
+    const home = el("button", { type: "button", id: "home-btn" }, "처음으로");
+    home.addEventListener("click", goHome);
+    actions.appendChild(home);
+    card.appendChild(actions);
     root.appendChild(card);
   }
 
@@ -496,6 +553,38 @@ function startApp(root, options) {
     setScreen("start");
   }
 
+  function appendRecordBox(card) {
+    const box = el("div", { className: "record-box" });
+    const msg = el("p", { id: "record-msg", className: "record-msg" });
+    if (!storage) {
+      msg.textContent = UNAVAILABLE_MSG;
+      box.appendChild(msg);
+      card.appendChild(box);
+      return;
+    }
+    const input = el("input", {
+      type: "text", id: "name-input", maxlength: "10", placeholder: "이름 (비우면 익명)", autocomplete: "off"
+    });
+    const btn = el("button", { type: "button", id: "record-btn" }, "순위표에 기록하기");
+    btn.addEventListener("click", () => {
+      if (btn.disabled) return;
+      btn.disabled = true;
+      input.disabled = true;
+      const outcome = saveEntry(storage, state.category, state.mode, {
+        name: normalizeName(input.value),
+        score: totalScore(state),
+        date: formatDate(new Date(now()))
+      });
+      if (outcome.saved) msg.textContent = outcome.rank + "위로 기록했어요";
+      else if (outcome.reason === "not-qualified") msg.textContent = "상위 10위 안에 들지 못했어요";
+      else msg.textContent = UNAVAILABLE_MSG;
+    });
+    box.appendChild(input);
+    box.appendChild(btn);
+    box.appendChild(msg);
+    card.appendChild(box);
+  }
+
   function renderResult() {
     const card = el("div", { className: "card" });
     card.appendChild(el("h1", null, state.category + " 결과"));
@@ -521,6 +610,8 @@ function startApp(root, options) {
     if (state.isRetry && wrongs.length === 0) {
       card.appendChild(el("p", { id: "all-clear" }, "틀린 문제를 모두 맞혔어요"));
     }
+
+    if (state.mode !== "practice") appendRecordBox(card);
 
     const actions = el("div", { className: "actions" });
     if (state.mode === "practice" && wrongs.length > 0) {
