@@ -202,7 +202,7 @@ const QUESTIONS = [
   },
   {
     id: "sc-06", category: "과학",
-    question: "DNA를 이루는 네 가지 염기 가운데, RNA에서는 유라실(U)이 그 자리를 대신해 나타나지 않는 염기는?",
+    question: "DNA의 네 가지 염기 가운데, RNA에서는 대개 유라실(U)로 대체되는 염기는?",
     choices: ["아데닌(A)", "구아닌(G)", "사이토신(C)", "티민(T)"],
     answer: 3,
     explanation: "RNA의 네 염기는 유라실·아데닌·사이토신·구아닌이고, DNA에서는 유라실 대신 티민이 쓰인다.",
