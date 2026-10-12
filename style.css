@@ -77,7 +77,7 @@ button {
 
 .choices button.correct { background: #dcfce7; border-color: #16a34a; color: #14532d; }
 .choices button.wrong { background: #fee2e2; border-color: #dc2626; color: #7f1d1d; }
-.choices button.removed { background: #e5e7eb; border-color: #d1d5db; color: #9ca3af; }
+.choices button.removed { background: #e5e7eb; border-color: #d1d5db; color: #9ca3af; text-decoration: line-through; }
 .choices button:disabled { cursor: default; }
 
 .quiz-meta {

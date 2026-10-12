@@ -234,7 +234,7 @@ const MODE_LABELS = { practice: "연습 모드", speed: "스피드 모드", hint
 const MODE_DESCRIPTIONS = {
   practice: "시간 제한 없이 풀며 해설을 읽어요.",
   speed: "문제마다 " + SPEED_SECONDS + "초 안에 답해야 해요.",
-  hint: "보기 2개를 지우는 힌트를 쓸 수 있어요. 힌트를 쓰고 맞히면 0.5점이에요."
+  hint: "오답 보기 2개를 지우는 힌트를 쓸 수 있어요. 힌트를 쓰고 맞히면 0.5점이에요."
 };
 const ROUND_SIZE = 10;
 const UNAVAILABLE_MSG = "이 브라우저에서는 기록을 저장할 수 없어요";
@@ -509,7 +509,7 @@ function startApp(root, options) {
     card.appendChild(choices);
 
     if (state.mode === "hint") {
-      const hint = el("button", { type: "button", id: "hint-btn" }, "힌트 (보기 2개 지우기)");
+      const hint = el("button", { type: "button", id: "hint-btn" }, state.hintUsed ? "힌트 사용함" : "힌트 (오답 2개 지우기)");
       hint.disabled = state.hintUsed || state.answered;
       hint.addEventListener("click", onHint);
       card.appendChild(hint);
