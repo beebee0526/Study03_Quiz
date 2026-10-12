@@ -82,15 +82,15 @@ const QUESTIONS = [
   },
   {
     id: "wg-01", category: "세계지리",
-    question: "1909년 새 수도 부지로 정해졌고, 1927년 연방 의회가 옮겨 온 오스트레일리아의 수도는?",
-    choices: ["시드니", "멜버른", "캔버라", "퍼스"],
+    question: "1927년 연방 의회가 멜버른에서 옮겨 온 오스트레일리아의 수도는?",
+    choices: ["시드니", "브리즈번", "캔버라", "퍼스"],
     answer: 2,
-    explanation: "캔버라는 1909년 수도 부지로 선정되었고, 1927년 5월 9일 연방 의회가 멜버른에서 이곳으로 옮겨 왔다.",
+    explanation: "캔버라는 1911년 국제 설계 공모에서 뽑힌 월터 벌리 그리핀의 계획에 따라 1913년 건설이 시작되었고, 1927년 5월 9일 연방 의회가 멜버른에서 이곳으로 옮겨 왔다.",
     source: { name: "브리태니커 'Canberra' 항목", url: "https://www.britannica.com/place/Canberra" }
   },
   {
     id: "wg-02", category: "세계지리",
-    question: "칠레 북부에 펼쳐져 있으며, 남태평양 고기압과 페루(훔볼트) 해류의 영향으로 몹시 건조한 사막은?",
+    question: "남태평양 고기압과 페루(훔볼트) 해류의 영향으로 몹시 건조한 사막은?",
     choices: ["사하라 사막", "고비 사막", "칼라하리 사막", "아타카마 사막"],
     answer: 3,
     explanation: "칠레 북부의 아타카마 사막은 남태평양 고기압의 하강 기류와 차가운 페루(훔볼트) 해류 때문에 세계에서 손꼽히게 건조한 지역이다.",
@@ -158,6 +158,6 @@ const QUESTIONS = [
     choices: ["태평양판", "유라시아판", "아프리카판", "남아메리카판"],
     answer: 1,
     explanation: "곤드와나에서 떨어져 나온 인도 아대륙은 약 4천만~5천만 년 전 유라시아와 충돌했고, 두 판의 충돌이 이어지면서 히말라야 산맥이 솟아올랐다.",
-    source: { name: "브리태니커 'Himalayas' 항목(Geologic history)", url: "https://www.britannica.com/place/Himalayas" }
+    source: { name: "브리태니커 'Himalayas' 항목", url: "https://www.britannica.com/place/Himalayas" }
   }
 ];
