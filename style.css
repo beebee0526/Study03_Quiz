@@ -14,6 +14,13 @@ body {
   margin: 0 auto;
 }
 
+.student-info {
+  max-width: 560px;
+  margin: 0 auto 12px;
+  font-weight: bold;
+  text-align: center;
+}
+
 .card {
   background: #fff;
   border-radius: 12px;
