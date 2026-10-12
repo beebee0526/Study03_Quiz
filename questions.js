@@ -159,5 +159,85 @@ const QUESTIONS = [
     answer: 1,
     explanation: "곤드와나에서 떨어져 나온 인도 아대륙은 약 4천만~5천만 년 전 유라시아와 충돌했고, 두 판의 충돌이 이어지면서 히말라야 산맥이 솟아올랐다.",
     source: { name: "브리태니커 'Himalayas' 항목", url: "https://www.britannica.com/place/Himalayas" }
+  },
+  {
+    id: "sc-01", category: "과학",
+    question: "국제단위계(SI)에서 힘의 단위는?",
+    choices: ["파스칼(Pa)", "줄(J)", "뉴턴(N)", "와트(W)"],
+    answer: 2,
+    explanation: "뉴턴(N)은 힘의 SI 유도 단위로 SI 기본 단위로는 m·kg·s⁻²이며, 파스칼은 압력, 줄은 에너지, 와트는 일률의 단위이다.",
+    source: { name: "NIST Guide to the SI (SP 811) 4장 'The Two Classes of SI Units and the SI Prefixes'", url: "https://www.nist.gov/pml/special-publication-811/nist-guide-si-chapter-4-two-classes-si-units-and-si-prefixes" }
+  },
+  {
+    id: "sc-02", category: "과학",
+    question: "울리는 경적에 다가갈 때는 소리가 높게 들리다가 지나친 뒤에는 낮게 들리는 것처럼, 파원과 관찰자의 상대 운동 때문에 파동의 진동수가 달라져 관측되는 현상은?",
+    choices: ["간섭", "회절", "공명", "도플러 효과"],
+    answer: 3,
+    explanation: "도플러 효과는 파원과 관찰자의 상대 운동 때문에 파동이 파원을 떠날 때와 관찰자에게 도달할 때의 진동수가 다르게 나타나는 현상이다.",
+    source: { name: "브리태니커 'Doppler effect' 항목", url: "https://www.britannica.com/science/Doppler-effect" }
+  },
+  {
+    id: "sc-03", category: "과학",
+    question: "다음 중 주기율표 18족 원소(비활성 기체)에 속하는 것은?",
+    choices: ["수소", "질소", "염소", "아르곤"],
+    answer: 3,
+    explanation: "비활성 기체는 주기율표 18족을 이루는 원소들로 헬륨·네온·아르곤·크립톤·제논·라돈 등이 있으며, 수소·질소·염소는 여기에 속하지 않는다.",
+    source: { name: "브리태니커 'noble gas' 항목", url: "https://www.britannica.com/science/noble-gas" }
+  },
+  {
+    id: "sc-04", category: "과학",
+    question: "물질의 양 1몰(mol)에 들어 있는 입자(원자·분자 등)의 수, 즉 아보가드로 수는 약 얼마인가?",
+    choices: ["2.998×10⁸", "6.022×10²³", "6.626×10⁻³⁴", "1.602×10⁻¹⁹"],
+    answer: 1,
+    explanation: "SI에서 1몰은 정확히 6.022 140 76×10²³개의 기본 입자를 포함하며, 2.998×10⁸은 빛의 속력(m/s), 6.626×10⁻³⁴은 플랑크 상수(J·s), 1.602×10⁻¹⁹는 기본 전하(C)의 값이다.",
+    source: { name: "NIST SP 330 (The International System of Units) 2절", url: "https://www.nist.gov/pml/special-publication-330/sp-330-section-2" }
+  },
+  {
+    id: "sc-05", category: "과학",
+    question: "세포의 생화학 반응에 필요한 화학 에너지의 대부분을 만들어 ATP(아데노신 삼인산) 형태로 저장하는 세포 소기관은?",
+    choices: ["리보솜", "미토콘드리아", "골지체", "리소좀"],
+    answer: 1,
+    explanation: "미토콘드리아는 막으로 둘러싸인 세포 소기관으로, 세포의 생화학 반응에 필요한 화학 에너지의 대부분을 만들어 ATP라는 작은 분자에 저장한다.",
+    source: { name: "미국 국립인간게놈연구소(NHGRI) 유전학 용어집 'Mitochondria'", url: "https://www.genome.gov/genetics-glossary/Mitochondria" }
+  },
+  {
+    id: "sc-06", category: "과학",
+    question: "DNA를 이루는 네 가지 염기 가운데, RNA에서는 유라실(U)이 그 자리를 대신해 나타나지 않는 염기는?",
+    choices: ["아데닌(A)", "구아닌(G)", "사이토신(C)", "티민(T)"],
+    answer: 3,
+    explanation: "RNA의 네 염기는 유라실·아데닌·사이토신·구아닌이고, DNA에서는 유라실 대신 티민이 쓰인다.",
+    source: { name: "미국 국립인간게놈연구소(NHGRI) 유전학 용어집 'Uracil'", url: "https://www.genome.gov/genetics-glossary/Uracil" }
+  },
+  {
+    id: "sc-07", category: "과학",
+    question: "혈액 속 포도당(혈당) 농도를 조절하는 호르몬인 인슐린을 만들어 분비하는 기관은?",
+    choices: ["간", "이자(췌장)", "콩팥(신장)", "갑상샘"],
+    answer: 1,
+    explanation: "인슐린은 이자(췌장)의 랑게르한스섬 베타세포에서 만들어지며, 식사 뒤처럼 혈당이 오르면 분비된다.",
+    source: { name: "브리태니커 'insulin' 항목", url: "https://www.britannica.com/science/insulin" }
+  },
+  {
+    id: "sc-08", category: "과학",
+    question: "지진이 시작된 땅속 지점의 바로 위에 해당하는 지표면의 지점을 이르는 말은?",
+    choices: ["진원", "진앙", "단층면", "판 경계"],
+    answer: 1,
+    explanation: "지진이 시작되는 땅속 지점을 진원(hypocenter), 그 바로 위 지표면의 지점을 진앙(epicenter)이라고 한다.",
+    source: { name: "미국 지질조사국(USGS) 'The Science of Earthquakes'", url: "https://www.usgs.gov/programs/earthquake-hazards/science-earthquakes" }
+  },
+  {
+    id: "sc-09", category: "과학",
+    question: "지구 대기 속 오존의 약 90%가 모여 있는, 고도 약 10~50km 사이의 대기층은?",
+    choices: ["대류권", "성층권", "중간권", "열권"],
+    answer: 1,
+    explanation: "NASA에 따르면 대기 중 오존의 90%는 고도 약 10~50km 사이의 대기층인 성층권에 있다.",
+    source: { name: "NASA Ozone Watch 'Ozone facts' (What is Ozone?)", url: "https://ozonewatch.gsfc.nasa.gov/facts/ozone_SH.html" }
+  },
+  {
+    id: "sc-10", category: "과학",
+    question: "태양 중심핵에서 일어나 태양의 열과 빛을 만들어 내는 반응은?",
+    choices: ["우라늄 원자핵의 핵분열", "수소가 헬륨이 되는 핵융합", "탄소의 연소(산화)", "라듐의 방사성 붕괴"],
+    answer: 1,
+    explanation: "태양 중심핵은 약 1,500만 °C로 뜨거워서, 여기서 수소가 융합해 헬륨이 되는 핵반응이 태양의 열과 빛을 만든다.",
+    source: { name: "NASA 'Sun: Facts'", url: "https://science.nasa.gov/sun/facts/" }
   }
 ];
