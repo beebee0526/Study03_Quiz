@@ -284,6 +284,7 @@ function startApp(root, options) {
   let state = null;
   let message = "";
   let selectedMode = null;
+  let selectedCategory = null;
   let timer = null;
   // 답한 뒤에도 멈춘 시각의 남은 초를 보여 주기 위해 마지막 값을 기억한다.
   let lastLeft = SPEED_SECONDS;
@@ -329,7 +330,7 @@ function startApp(root, options) {
   function render() {
     root.innerHTML = "";
     if (screen === "start") renderStart();
-    else if (screen === "category") renderCategory();
+    else if (screen === "mode") renderMode();
     else if (screen === "quiz") renderQuiz();
     else if (screen === "result") renderResult();
     else if (screen === "board") renderBoard();
@@ -338,16 +339,15 @@ function startApp(root, options) {
   function renderStart() {
     const card = el("div", { className: "card" });
     card.appendChild(el("h1", null, "4지선다 퀴즈"));
-    card.appendChild(el("p", null, "모드를 골라 주세요."));
-    ["practice", "speed", "hint"].forEach(mode => {
-      const row = el("div", { className: "mode-row" });
-      const b = el("button", { type: "button", "data-mode": mode }, MODE_LABELS[mode]);
-      b.addEventListener("click", () => chooseMode(mode));
-      row.appendChild(b);
-      if (mode === "practice") row.appendChild(el("span", { className: "no-record" }, "순위표에 기록되지 않음"));
-      row.appendChild(el("p", { className: "mode-desc" }, MODE_DESCRIPTIONS[mode]));
-      card.appendChild(row);
+    card.appendChild(el("p", null, "카테고리를 골라 주세요."));
+    const list = el("div", { className: "category-list" });
+    CATEGORIES.forEach(name => {
+      const b = el("button", { type: "button", "data-category": name }, name);
+      b.addEventListener("click", () => chooseCategory(name));
+      list.appendChild(b);
     });
+    card.appendChild(list);
+    if (message) card.appendChild(el("p", { className: "empty-msg" }, message));
     const boardBtn = el("button", { type: "button", id: "board-btn", className: "board-link" }, "순위표 보기");
     boardBtn.addEventListener("click", () => setScreen("board"));
     card.appendChild(boardBtn);
@@ -402,42 +402,45 @@ function startApp(root, options) {
     root.appendChild(card);
   }
 
-  function chooseMode(mode) {
-    selectedMode = mode;
+  function chooseCategory(name) {
+    if (!questions.some(q => q.category === name)) {
+      message = "이 카테고리에는 아직 문제가 없어요.";
+      setScreen("start");
+      return;
+    }
+    selectedCategory = name;
     message = "";
-    setScreen("category");
+    setScreen("mode");
   }
 
-  function renderCategory() {
+  function renderMode() {
     const card = el("div", { className: "card" });
     const h1 = el("h1", null, "4지선다 퀴즈");
-    h1.appendChild(el("span", { className: "mode-badge" }, MODE_LABELS[selectedMode]));
+    h1.appendChild(el("span", { className: "mode-badge" }, selectedCategory));
     card.appendChild(h1);
-    card.appendChild(el("p", null, "카테고리를 골라 주세요."));
-    const list = el("div", { className: "category-list" });
-    CATEGORIES.forEach(name => {
-      const b = el("button", { type: "button", "data-category": name }, name);
-      b.addEventListener("click", () => startRound(name));
-      list.appendChild(b);
+    card.appendChild(el("p", null, "모드를 골라 주세요."));
+    ["practice", "speed", "hint"].forEach(mode => {
+      const row = el("div", { className: "mode-row" });
+      const b = el("button", { type: "button", "data-mode": mode }, MODE_LABELS[mode]);
+      b.addEventListener("click", () => chooseMode(mode));
+      row.appendChild(b);
+      if (mode === "practice") row.appendChild(el("span", { className: "no-record" }, "순위표에 기록되지 않음"));
+      row.appendChild(el("p", { className: "mode-desc" }, MODE_DESCRIPTIONS[mode]));
+      card.appendChild(row);
     });
-    card.appendChild(list);
-    appendPracticeNotice(card, selectedMode);
-    if (message) card.appendChild(el("p", { className: "empty-msg" }, message));
     const back = el("button", { type: "button", id: "back-btn" }, "뒤로");
     back.addEventListener("click", goHome);
     card.appendChild(back);
     root.appendChild(card);
   }
 
+  function chooseMode(mode) {
+    selectedMode = mode;
+    startRound(selectedCategory);
+  }
+
   function startRound(category) {
     const pool = questions.filter(q => q.category === category);
-    if (pool.length === 0) {
-      message = "이 카테고리에는 아직 문제가 없어요.";
-      state = null;
-      setScreen("category");
-      return;
-    }
-    message = "";
     state = createGame({ mode: selectedMode, category: category, questions: pool, rng: rng, limit: ROUND_SIZE });
     beginQuestion();
   }
