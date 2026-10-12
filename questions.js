@@ -239,5 +239,85 @@ const QUESTIONS = [
     answer: 1,
     explanation: "태양 중심핵은 약 1,500만 °C로 뜨거워서, 여기서 수소가 융합해 헬륨이 되는 핵반응이 태양의 열과 빛을 만든다.",
     source: { name: "NASA 'Sun: Facts'", url: "https://science.nasa.gov/sun/facts/" }
+  },
+  {
+    id: "ac-01", category: "예술과 문화",
+    question: "빈센트 반 고흐가 1889년 6월 프랑스 생레미의 요양원에 머물며 그린 「별이 빛나는 밤」을 소장한 미술관은?",
+    choices: ["뉴욕 현대미술관(MoMA)", "암스테르담 반 고흐 미술관", "파리 루브르 박물관", "런던 내셔널 갤러리"],
+    answer: 0,
+    explanation: "「별이 빛나는 밤」은 반 고흐가 생레미의 생폴드모졸 요양원 창밖 풍경에서 영감을 받아 1889년 6월 중순에 그린 유화로, 뉴욕 현대미술관(MoMA)의 소장품이다.",
+    source: { name: "뉴욕 현대미술관(MoMA) 소장품 'The Starry Night'", url: "https://www.moma.org/collection/works/79802" }
+  },
+  {
+    id: "ac-02", category: "예술과 문화",
+    question: "1874년 파리의 한 전시회에 출품되어 '인상주의(인상파)'라는 이름이 생겨나는 계기가 된 그림 「인상, 해돋이」를 그린 화가는?",
+    choices: ["에두아르 마네", "클로드 모네", "폴 세잔", "오귀스트 르누아르"],
+    answer: 1,
+    explanation: "모네는 르아브르 항구의 새벽 풍경을 그린 이 그림에 「인상」이라는 제목을 붙여 1874년 전시회에 내놓았고, 비평가 루이 르루아가 이를 따서 기사 제목을 「인상주의자들의 전시회」라고 지었다.",
+    source: { name: "마르모탕 모네 미술관 소장품 'Impression, soleil levant'", url: "https://www.marmottan.fr/en/notice/4014/" }
+  },
+  {
+    id: "ac-03", category: "예술과 문화",
+    question: "비가 갠 뒤의 인왕산 경치를 그린 국보 「인왕제색도」의 화가는?",
+    choices: ["김홍도", "신윤복", "정선", "김정희"],
+    answer: 2,
+    explanation: "「인왕제색도」는 정선이 76세 때인 1751년에 비 온 뒤의 인왕산 경치를 보고 그린 수묵 산수화로, 국립중앙박물관이 소장하고 있다.",
+    source: { name: "한국민족문화대백과사전 '정선 필 인왕제색도' 항목", url: "https://encykorea.aks.ac.kr/Article/E0046984" }
+  },
+  {
+    id: "ac-04", category: "예술과 문화",
+    question: "마지막 악장에서 독창자들과 합창단이 실러의 시 「환희의 송가(An die Freude)」를 노래하는 베토벤의 교향곡은?",
+    choices: ["교향곡 제3번", "교향곡 제5번", "교향곡 제6번", "교향곡 제9번"],
+    answer: 3,
+    explanation: "베토벤의 마지막 완성 교향곡인 제9번은 마지막 악장에서 독창자들과 합창단이 실러의 시 「환희의 송가」를 노래하며, 1824년 빈에서 초연되었다.",
+    source: { name: "브리태니커 'Symphony No. 9 in D Minor, Op. 125' 항목", url: "https://www.britannica.com/topic/Symphony-No-9-in-D-Minor" }
+  },
+  {
+    id: "ac-05", category: "예술과 문화",
+    question: "소리꾼 한 사람이 북을 치는 고수의 반주에 맞춰 노래와 말, 몸짓을 섞어 가며 긴 이야기를 들려주는 한국의 전통 공연 예술은?",
+    choices: ["탈춤", "남사당놀이", "판소리", "종묘제례악"],
+    answer: 2,
+    explanation: "판소리는 소리꾼 한 명과 북 하나를 치는 고수가 함께하는 이야기 노래로, 공연이 8시간에 이르기도 하며 유네스코 인류무형문화유산 대표목록에 올라 있다.",
+    source: { name: "유네스코 무형유산 'Pansori epic chant'", url: "https://ich.unesco.org/en/RL/pansori-epic-chant-00070" }
+  },
+  {
+    id: "ac-06", category: "예술과 문화",
+    question: "1780년 청나라 건륭제의 칠순 잔치를 축하하러 가는 사절단을 따라 열하까지 다녀온 뒤 견문록 『열하일기』를 쓴 인물은?",
+    choices: ["박제가", "홍대용", "정약용", "박지원"],
+    answer: 3,
+    explanation: "『열하일기』는 실학자 박지원이 1780년 건륭제의 칠순연을 축하하러 가는 삼종형 박명원을 수행해 연경과 열하를 다녀온 뒤 쓴 견문록이다.",
+    source: { name: "한국민족문화대백과사전 '열하일기' 항목", url: "https://encykorea.aks.ac.kr/Article/E0037072" }
+  },
+  {
+    id: "ac-07", category: "예술과 문화",
+    question: "기사 이야기에 빠진 시골 귀족이 스스로 기사가 되어 종자 산초 판사와 함께 모험을 떠나는 소설 『돈키호테』의 작가는?",
+    choices: ["미겔 데 세르반테스", "로페 데 베가", "윌리엄 셰익스피어", "프랑수아 라블레"],
+    answer: 0,
+    explanation: "『돈키호테』는 에스파냐 작가 세르반테스가 1605년(1부)과 1615년(2부)에 펴낸 소설로, 당시 유행하던 기사 이야기를 풍자하려는 의도로 구상되었다.",
+    source: { name: "브리태니커 'Don Quixote' 항목", url: "https://www.britannica.com/topic/Don-Quixote-novel" }
+  },
+  {
+    id: "ac-08", category: "예술과 문화",
+    question: "무굴 제국 황제 샤자한이 세상을 떠난 아내 뭄타즈 마할을 기리기 위해 인도 아그라에 지은 흰 대리석 무덤은?",
+    choices: ["후마윤 묘", "타지마할", "아그라 성", "쿠트브 미나르"],
+    answer: 1,
+    explanation: "타지마할은 무굴 황제 샤자한이 아내 뭄타즈 마할을 기리기 위해 아그라에 짓게 한 거대한 흰 대리석 무덤이다.",
+    source: { name: "유네스코 세계유산 'Taj Mahal'", url: "https://whc.unesco.org/en/list/252/" }
+  },
+  {
+    id: "ac-09", category: "예술과 문화",
+    question: "조선 정조가 아버지 장헌세자(사도세자)의 무덤을 옮긴 뒤 그 일대에 쌓았으며, 실학자 정약용이 설계를 맡은 성곽은?",
+    choices: ["남한산성", "북한산성", "수원 화성", "한양도성"],
+    answer: 2,
+    explanation: "수원 화성은 18세기 말 정조가 방어와 새 정치 기반 마련, 아버지 장헌세자의 유해를 모시기 위해 쌓은 성곽으로, 실학자 정약용이 설계했다.",
+    source: { name: "유네스코 세계유산 'Hwaseong Fortress'", url: "https://whc.unesco.org/en/list/817/" }
+  },
+  {
+    id: "ac-10", category: "예술과 문화",
+    question: "몽골의 침입에 맞서 새긴 고려 대장경판(팔만대장경)을 보관하는 장경판전이 있는 사찰은?",
+    choices: ["불국사", "통도사", "송광사", "해인사"],
+    answer: 3,
+    explanation: "가야산 해인사의 장경판전은 몽골의 침입에 맞서 1237~1248년에 새긴 약 8만 장의 대장경판을 보관하려고 15세기에 지은 건물이다.",
+    source: { name: "유네스코 세계유산 'Haeinsa Temple Janggyeong Panjeon'", url: "https://whc.unesco.org/en/list/737/" }
   }
 ];
