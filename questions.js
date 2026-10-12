@@ -2,10 +2,10 @@ const CATEGORIES = ["한국사", "세계지리", "과학", "예술과 문화"];
 const QUESTIONS = [
   {
     id: "kh-01", category: "한국사",
-    question: "고조선의 법으로, 원래 8개 조항 가운데 3개 조항만 『한서』 지리지에 전해지는 것은?",
+    question: "살인·상해·절도에 관한 조항이 『한서』 지리지에 전해지는 고조선의 법은?",
     choices: ["경국대전", "8조법(범금 8조)", "대전회통", "대명률"],
     answer: 1,
-    explanation: "고조선의 8조법은 살인·상해·절도에 관한 3개 조항만 『한서』 지리지에 전해진다.",
+    explanation: "고조선의 8조법은 전문이 전하지 않고 살인·상해·절도에 관한 3개 조항만 『한서』 지리지에 전해진다.",
     source: { name: "한국민족문화대백과사전 '팔조법금' 항목", url: "https://encykorea.aks.ac.kr/Article/E0059778" }
   },
   {
@@ -42,7 +42,7 @@ const QUESTIONS = [
   },
   {
     id: "kh-06", category: "한국사",
-    question: "1592년 이순신이 학익진을 펼쳐 한산섬 앞바다에서 일본 수군의 주력을 무찌른 싸움은?",
+    question: "1592년 이순신이 학익진으로 일본 수군의 주력을 무찌른 싸움은?",
     choices: ["명량 해전", "노량 해전", "행주 대첩", "한산도 대첩"],
     answer: 3,
     explanation: "한산도 대첩(1592)에서 이순신은 일본 수군을 넓은 바다로 끌어내 학익진으로 포위해 크게 이겼다.",
@@ -53,7 +53,7 @@ const QUESTIONS = [
     question: "정조 때 정약용이 도르래를 이용해 만든 거중기를 사용해 쌓은 성은?",
     choices: ["수원 화성", "남한산성", "북한산성", "한양도성"],
     answer: 0,
-    explanation: "수원 화성은 정약용이 만든 거중기 등을 활용해 1794년에 쌓기 시작해 1796년에 완성했다.",
+    explanation: "정약용은 활차(도르래)로 거중기를 만들고 녹로를 사용해 각종 시설을 고루 갖춘 수원 화성을 쌓았다.",
     source: { name: "한국민족문화대백과사전 '수원시' 항목", url: "https://encykorea.aks.ac.kr/Article/E0031604" }
   },
   {
@@ -69,8 +69,8 @@ const QUESTIONS = [
     question: "3·1 운동 이후 1919년 4월 대한민국 임시정부가 처음 수립된 도시는?",
     choices: ["충칭", "도쿄", "상하이", "베이징"],
     answer: 2,
-    explanation: "대한민국 임시정부는 1919년 4월 11일 중국 상하이에서 수립되었고, 충칭에는 1940년에 옮겨 갔다.",
-    source: { name: "한국민족문화대백과사전 '대한민국 임시정부 수립 기념일' 항목", url: "https://encykorea.aks.ac.kr/Article/E0080590" }
+    explanation: "대한민국 임시정부는 1919년 4월 11일 중국 상하이에 수립되었고, 1940년 9월 충칭에 정착했다.",
+    source: { name: "한국민족문화대백과사전 '대한민국 임시정부' 항목", url: "https://encykorea.aks.ac.kr/Article/E0015017" }
   },
   {
     id: "kh-10", category: "한국사",
