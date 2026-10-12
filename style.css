@@ -154,6 +154,8 @@ button {
 
 a { color: #4338ca; }
 
+.source { font-size: 0.85rem; color: #6b7280; }
+
 .mode-row { margin-bottom: 14px; }
 .mode-row .no-record { display: block; margin: 4px 0 0; }
 .mode-desc { margin: 4px 0 0; color: #4b5563; font-size: 0.9rem; }
@@ -168,7 +170,21 @@ a { color: #4338ca; }
   color: #4b5563;
 }
 
-#timer { font-weight: bold; font-variant-numeric: tabular-nums; }
+.timer-box {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 6px;
+  margin: 0 0 8px;
+  padding: 8px 12px;
+  border-radius: 10px;
+  background: #f3f4f6;
+  color: #374151;
+}
+
+.timer-label { font-size: 0.95rem; color: #4b5563; }
+.timer-unit { font-size: 1.1rem; font-weight: bold; }
+#timer { font-size: 2rem; line-height: 1.1; font-weight: bold; font-variant-numeric: tabular-nums; }
 #timer.low { color: #b91c1c; }
 
 #hint-btn {

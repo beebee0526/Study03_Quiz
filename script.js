@@ -285,6 +285,8 @@ function startApp(root, options) {
   let message = "";
   let selectedMode = null;
   let timer = null;
+  // 답한 뒤에도 멈춘 시각의 남은 초를 보여 주기 위해 마지막 값을 기억한다.
+  let lastLeft = SPEED_SECONDS;
 
   function stopTimer() {
     if (timer) {
@@ -301,10 +303,12 @@ function startApp(root, options) {
       onTick: updateTimerText,
       onExpire: onTimeout
     });
+    lastLeft = SPEED_SECONDS;
     timer.start();
   }
 
   function updateTimerText(left) {
+    lastLeft = left;
     const node = root.querySelector("#timer");
     if (node) {
       node.textContent = String(left);
@@ -319,6 +323,7 @@ function startApp(root, options) {
   function setScreen(name) {
     screen = name;
     render();
+    window.scrollTo(0, 0);
   }
 
   function render() {
@@ -463,17 +468,21 @@ function startApp(root, options) {
     const scoreWrap = el("span", null, "점수 ");
     scoreWrap.appendChild(el("span", { id: "current-score" }, String(totalScore(state))));
     meta.appendChild(scoreWrap);
-    if (state.mode === "speed") {
-      const timerWrap = el("span", null, "남은 시간 ");
-      const left = state.answered || !timer ? "" : String(timer.remaining());
-      timerWrap.appendChild(el("span", { id: "timer" }, left));
-      timerWrap.appendChild(document.createTextNode(left === "" ? "" : "초"));
-      meta.appendChild(timerWrap);
-    }
     const quit = el("button", { type: "button", id: "quit-btn" }, "그만하기");
     quit.addEventListener("click", onQuit);
     meta.appendChild(quit);
     card.appendChild(meta);
+
+    if (state.mode === "speed") {
+      const left = state.answered || !timer ? lastLeft : timer.remaining();
+      const timerBox = el("div", { className: "timer-box" });
+      timerBox.appendChild(el("span", { className: "timer-label" }, "남은 시간"));
+      const timerNode = el("span", { id: "timer" }, String(left));
+      if (left <= 5) timerNode.classList.add("low");
+      timerBox.appendChild(timerNode);
+      timerBox.appendChild(el("span", { className: "timer-unit" }, "초"));
+      card.appendChild(timerBox);
+    }
 
     card.appendChild(el("p", { className: "quiz-question" }, q.question));
 
@@ -508,7 +517,7 @@ function startApp(root, options) {
       const verdict = last.correct ? "정답!" : (last.timedOut ? "시간 초과" : "오답");
       fb.appendChild(el("p", { className: "verdict " + (last.correct ? "ok" : "ng") }, verdict));
       fb.appendChild(el("p", null, q.explanation));
-      const src = el("p", null);
+      const src = el("p", { className: "source" });
       src.appendChild(sourceNode(q.source, "source-link"));
       fb.appendChild(src);
       card.appendChild(fb);
@@ -600,7 +609,7 @@ function startApp(root, options) {
         item.appendChild(el("p", null, "내가 고른 답: " + mine));
         item.appendChild(el("p", null, "정답: " + r.question.choices[r.question.answer]));
         item.appendChild(el("p", null, r.question.explanation));
-        const src = el("p", null);
+        const src = el("p", { className: "source" });
         src.appendChild(sourceNode(r.question.source));
         item.appendChild(src);
         card.appendChild(item);
