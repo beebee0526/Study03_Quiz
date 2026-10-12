@@ -119,7 +119,7 @@ button {
 
 .actions button { text-align: center; font-weight: bold; }
 
-#next-btn, #again-btn {
+#next-btn, #again-btn, #retry-btn {
   background: #4f46e5;
   border-color: #4f46e5;
   color: #fff;
@@ -170,3 +170,32 @@ a { color: #4338ca; }
 
 #timer { font-weight: bold; font-variant-numeric: tabular-nums; }
 #timer.low { color: #b91c1c; }
+
+#hint-btn {
+  width: 100%;
+  min-height: 44px;
+  margin-top: 12px;
+  padding: 10px 14px;
+  border: 2px solid #f59e0b;
+  border-radius: 10px;
+  background: #fffbeb;
+  color: #92400e;
+  font-weight: bold;
+}
+
+#hint-btn:disabled {
+  border-color: #d1d5db;
+  background: #f3f4f6;
+  color: #9ca3af;
+  cursor: default;
+}
+
+#all-clear {
+  margin: 16px 0 0;
+  padding: 12px;
+  border-radius: 10px;
+  background: #dcfce7;
+  color: #14532d;
+  font-weight: bold;
+  text-align: center;
+}

@@ -17,11 +17,12 @@ function prepareRound(questions, rng) {
   });
 }
 
-function createGame({ mode, category, questions, rng, isRetry = false }) {
+function createGame({ mode, category, questions, rng, isRetry = false, limit }) {
+  const round = prepareRound(questions, rng);
   return {
     mode: mode,
     category: category,
-    questions: prepareRound(questions, rng),
+    questions: limit === undefined ? round : round.slice(0, limit),
     index: 0,
     results: [],
     answered: false,
@@ -58,6 +59,16 @@ function answerQuestion(state, choiceIndex) {
   return result;
 }
 
+function useHint(state, rng = Math.random) {
+  const q = currentQuestion(state);
+  if (state.mode !== "hint" || !q || state.hintUsed || state.answered) return [];
+  const wrongIndexes = [0, 1, 2, 3].filter(i => i !== q.answer);
+  const removed = shuffle(wrongIndexes, rng).slice(0, 2);
+  state.removed = removed;
+  state.hintUsed = true;
+  return removed;
+}
+
 function nextQuestion(state) {
   state.index++;
   state.answered = false;
@@ -76,6 +87,16 @@ function totalScore(state) {
 
 function wrongResults(state) {
   return state.results.filter(r => !r.correct);
+}
+
+function createRetryGame(state, rng) {
+  return createGame({
+    mode: "practice",
+    category: state.category,
+    questions: wrongResults(state).map(r => r.question),
+    rng: rng,
+    isRetry: true
+  });
 }
 
 function formatScore(score, max) {
@@ -269,9 +290,17 @@ function startApp(root, options) {
       return;
     }
     message = "";
-    state = createGame({ mode: selectedMode, category: category, questions: pool, rng: rng });
-    state.questions = state.questions.slice(0, ROUND_SIZE);
+    state = createGame({ mode: selectedMode, category: category, questions: pool, rng: rng, limit: ROUND_SIZE });
     beginQuestion();
+  }
+
+  function startRetry() {
+    state = createRetryGame(state, rng);
+    beginQuestion();
+  }
+
+  function onHint() {
+    if (useHint(state, rng).length > 0) render();
   }
 
   function beginQuestion() {
@@ -309,16 +338,27 @@ function startApp(root, options) {
     const choices = el("div", { className: "choices" });
     q.choices.forEach((text, i) => {
       const b = el("button", { type: "button", "data-choice": String(i) }, text);
+      if (state.removed.includes(i)) {
+        b.classList.add("removed");
+        b.disabled = true;
+      }
       if (state.answered) {
         b.disabled = true;
         if (i === q.answer) b.classList.add("correct");
         else if (last && i === last.chosen) b.classList.add("wrong");
-      } else {
+      } else if (!b.disabled) {
         b.addEventListener("click", () => onChoose(i));
       }
       choices.appendChild(b);
     });
     card.appendChild(choices);
+
+    if (state.mode === "hint") {
+      const hint = el("button", { type: "button", id: "hint-btn" }, "힌트 (보기 2개 지우기)");
+      hint.disabled = state.hintUsed || state.answered;
+      hint.addEventListener("click", onHint);
+      card.appendChild(hint);
+    }
 
     if (state.answered) {
       const fb = el("div", { id: "feedback" });
@@ -392,12 +432,23 @@ function startApp(root, options) {
       });
     }
 
+    if (state.isRetry && wrongs.length === 0) {
+      card.appendChild(el("p", { id: "all-clear" }, "틀린 문제를 모두 맞혔어요"));
+    }
+
     const actions = el("div", { className: "actions" });
-    const again = el("button", { type: "button", id: "again-btn" }, "같은 카테고리 다시 하기");
-    again.addEventListener("click", () => startRound(state.category));
+    if (state.mode === "practice" && wrongs.length > 0) {
+      const retry = el("button", { type: "button", id: "retry-btn" }, "틀린 문제 다시 풀기");
+      retry.addEventListener("click", startRetry);
+      actions.appendChild(retry);
+    }
+    if (!state.isRetry) {
+      const again = el("button", { type: "button", id: "again-btn" }, "같은 카테고리 다시 하기");
+      again.addEventListener("click", () => startRound(state.category));
+      actions.appendChild(again);
+    }
     const home = el("button", { type: "button", id: "home-btn" }, "처음으로");
     home.addEventListener("click", goHome);
-    actions.appendChild(again);
     actions.appendChild(home);
     card.appendChild(actions);
     appendPracticeNotice(card, state.mode);
