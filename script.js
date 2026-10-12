@@ -156,6 +156,10 @@ function sourceNode(source, id) {
   return wrap;
 }
 
+function appendPracticeNotice(card, mode) {
+  if (mode === "practice") card.appendChild(el("p", { className: "no-record" }, "연습 모드는 순위표에 기록되지 않음"));
+}
+
 function startApp(root, options) {
   const opts = options || {};
   const questions = opts.questions || [];
@@ -248,7 +252,7 @@ function startApp(root, options) {
       list.appendChild(b);
     });
     card.appendChild(list);
-    if (selectedMode === "practice") card.appendChild(el("p", { className: "no-record" }, "연습 모드는 순위표에 기록되지 않음"));
+    appendPracticeNotice(card, selectedMode);
     if (message) card.appendChild(el("p", { className: "empty-msg" }, message));
     const back = el("button", { type: "button", id: "back-btn" }, "뒤로");
     back.addEventListener("click", goHome);
@@ -337,6 +341,10 @@ function startApp(root, options) {
   }
 
   function onChoose(i) {
+    if (timer) {
+      timer.check();
+      if (state.answered) return;
+    }
     if (answerQuestion(state, i)) {
       stopTimer();
       render();
@@ -392,7 +400,7 @@ function startApp(root, options) {
     actions.appendChild(again);
     actions.appendChild(home);
     card.appendChild(actions);
-    if (state.mode === "practice") card.appendChild(el("p", { className: "no-record" }, "연습 모드는 순위표에 기록되지 않음"));
+    appendPracticeNotice(card, state.mode);
     root.appendChild(card);
   }
 
