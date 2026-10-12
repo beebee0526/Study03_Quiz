@@ -55,6 +55,7 @@ button {
 }
 
 .category-list button,
+.mode-row > button,
 .choices button,
 .actions button {
   width: 100%;
@@ -68,6 +69,7 @@ button {
 }
 
 .category-list button:hover:not(:disabled),
+.mode-row > button:hover,
 .choices button:hover:not(:disabled) {
   border-color: #6366f1;
   background: #eef2ff;
@@ -151,3 +153,20 @@ button {
 .wrong-item .q { font-weight: bold; }
 
 a { color: #4338ca; }
+
+.mode-row { margin-bottom: 14px; }
+.mode-row .no-record { display: block; margin: 4px 0 0; }
+.mode-desc { margin: 4px 0 0; color: #4b5563; font-size: 0.9rem; }
+
+#back-btn {
+  margin-top: 16px;
+  min-height: 44px;
+  padding: 8px 16px;
+  border: 1px solid #c7cdd6;
+  border-radius: 8px;
+  background: #fff;
+  color: #4b5563;
+}
+
+#timer { font-weight: bold; font-variant-numeric: tabular-nums; }
+#timer.low { color: #b91c1c; }

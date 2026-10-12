@@ -82,9 +82,53 @@ function formatScore(score, max) {
   return score + " / " + max;
 }
 
+const SPEED_SECONDS = 15;
+
+function createTimer({ seconds, now, onTick, onExpire }) {
+  let deadline = 0;
+  let running = false;
+  let handle = null;
+
+  function remaining() {
+    return Math.max(0, Math.ceil((deadline - now()) / 1000));
+  }
+
+  function stop() {
+    running = false;
+    if (handle !== null) {
+      clearInterval(handle);
+      handle = null;
+    }
+  }
+
+  function check() {
+    if (!running) return;
+    const left = remaining();
+    onTick(left);
+    if (left === 0) {
+      stop();
+      onExpire();
+    }
+  }
+
+  function start() {
+    stop();
+    deadline = now() + seconds * 1000;
+    running = true;
+    handle = setInterval(check, 250);
+  }
+
+  return { start: start, stop: stop, remaining: remaining, check: check };
+}
+
 // ---- UI ----
 
 const MODE_LABELS = { practice: "연습 모드", speed: "스피드 모드", hint: "힌트 모드" };
+const MODE_DESCRIPTIONS = {
+  practice: "시간 제한 없이 풀며 해설을 읽어요.",
+  speed: "문제마다 " + SPEED_SECONDS + "초 안에 답해야 해요.",
+  hint: "보기 2개를 지우는 힌트를 쓸 수 있어요. 힌트를 쓰고 맞히면 0.5점이에요."
+};
 const ROUND_SIZE = 10;
 
 function el(tag, props, text) {
@@ -118,9 +162,43 @@ function startApp(root, options) {
   const rng = opts.rng || Math.random;
   const confirmFn = opts.confirm || window.confirm.bind(window);
 
-  let screen = "category";
+  const now = opts.now || Date.now;
+
+  let screen = "start";
   let state = null;
   let message = "";
+  let selectedMode = null;
+  let timer = null;
+
+  function stopTimer() {
+    if (timer) {
+      timer.stop();
+      timer = null;
+    }
+  }
+
+  function startTimer() {
+    stopTimer();
+    timer = createTimer({
+      seconds: SPEED_SECONDS,
+      now: now,
+      onTick: updateTimerText,
+      onExpire: onTimeout
+    });
+    timer.start();
+  }
+
+  function updateTimerText(left) {
+    const node = root.querySelector("#timer");
+    if (node) {
+      node.textContent = String(left);
+      node.classList.toggle("low", left <= 5);
+    }
+  }
+
+  function onTimeout() {
+    if (answerQuestion(state, null)) render();
+  }
 
   function setScreen(name) {
     screen = name;
@@ -129,15 +207,38 @@ function startApp(root, options) {
 
   function render() {
     root.innerHTML = "";
-    if (screen === "category") renderCategory();
+    if (screen === "start") renderStart();
+    else if (screen === "category") renderCategory();
     else if (screen === "quiz") renderQuiz();
     else if (screen === "result") renderResult();
+  }
+
+  function renderStart() {
+    const card = el("div", { className: "card" });
+    card.appendChild(el("h1", null, "4지선다 퀴즈"));
+    card.appendChild(el("p", null, "모드를 골라 주세요."));
+    ["practice", "speed", "hint"].forEach(mode => {
+      const row = el("div", { className: "mode-row" });
+      const b = el("button", { type: "button", "data-mode": mode }, MODE_LABELS[mode]);
+      b.addEventListener("click", () => chooseMode(mode));
+      row.appendChild(b);
+      if (mode === "practice") row.appendChild(el("span", { className: "no-record" }, "순위표에 기록되지 않음"));
+      row.appendChild(el("p", { className: "mode-desc" }, MODE_DESCRIPTIONS[mode]));
+      card.appendChild(row);
+    });
+    root.appendChild(card);
+  }
+
+  function chooseMode(mode) {
+    selectedMode = mode;
+    message = "";
+    setScreen("category");
   }
 
   function renderCategory() {
     const card = el("div", { className: "card" });
     const h1 = el("h1", null, "4지선다 퀴즈");
-    h1.appendChild(el("span", { className: "mode-badge" }, MODE_LABELS.practice));
+    h1.appendChild(el("span", { className: "mode-badge" }, MODE_LABELS[selectedMode]));
     card.appendChild(h1);
     card.appendChild(el("p", null, "카테고리를 골라 주세요."));
     const list = el("div", { className: "category-list" });
@@ -147,8 +248,11 @@ function startApp(root, options) {
       list.appendChild(b);
     });
     card.appendChild(list);
-    card.appendChild(el("p", { className: "no-record" }, "연습 모드는 순위표에 기록되지 않음"));
+    if (selectedMode === "practice") card.appendChild(el("p", { className: "no-record" }, "연습 모드는 순위표에 기록되지 않음"));
     if (message) card.appendChild(el("p", { className: "empty-msg" }, message));
+    const back = el("button", { type: "button", id: "back-btn" }, "뒤로");
+    back.addEventListener("click", goHome);
+    card.appendChild(back);
     root.appendChild(card);
   }
 
@@ -161,8 +265,14 @@ function startApp(root, options) {
       return;
     }
     message = "";
-    state = createGame({ mode: "practice", category: category, questions: pool, rng: rng });
+    state = createGame({ mode: selectedMode, category: category, questions: pool, rng: rng });
     state.questions = state.questions.slice(0, ROUND_SIZE);
+    beginQuestion();
+  }
+
+  function beginQuestion() {
+    if (state.mode === "speed") startTimer();
+    else stopTimer();
     setScreen("quiz");
   }
 
@@ -177,6 +287,13 @@ function startApp(root, options) {
     const scoreWrap = el("span", null, "점수 ");
     scoreWrap.appendChild(el("span", { id: "current-score" }, String(totalScore(state))));
     meta.appendChild(scoreWrap);
+    if (state.mode === "speed") {
+      const timerWrap = el("span", null, "남은 시간 ");
+      const left = state.answered || !timer ? "" : String(timer.remaining());
+      timerWrap.appendChild(el("span", { id: "timer" }, left));
+      timerWrap.appendChild(document.createTextNode(left === "" ? "" : "초"));
+      meta.appendChild(timerWrap);
+    }
     const quit = el("button", { type: "button", id: "quit-btn" }, "그만하기");
     quit.addEventListener("click", onQuit);
     meta.appendChild(quit);
@@ -201,7 +318,8 @@ function startApp(root, options) {
 
     if (state.answered) {
       const fb = el("div", { id: "feedback" });
-      fb.appendChild(el("p", { className: "verdict " + (last.correct ? "ok" : "ng") }, last.correct ? "정답!" : "오답"));
+      const verdict = last.correct ? "정답!" : (last.timedOut ? "시간 초과" : "오답");
+      fb.appendChild(el("p", { className: "verdict " + (last.correct ? "ok" : "ng") }, verdict));
       fb.appendChild(el("p", null, q.explanation));
       const src = el("p", null);
       src.appendChild(sourceNode(q.source, "source-link"));
@@ -219,12 +337,18 @@ function startApp(root, options) {
   }
 
   function onChoose(i) {
-    if (answerQuestion(state, i)) render();
+    if (answerQuestion(state, i)) {
+      stopTimer();
+      render();
+    }
   }
 
   function onNext() {
-    if (nextQuestion(state)) setScreen("quiz");
-    else setScreen("result");
+    if (nextQuestion(state)) beginQuestion();
+    else {
+      stopTimer();
+      setScreen("result");
+    }
   }
 
   function onQuit() {
@@ -232,9 +356,10 @@ function startApp(root, options) {
   }
 
   function goHome() {
+    stopTimer();
     state = null;
     message = "";
-    setScreen("category");
+    setScreen("start");
   }
 
   function renderResult() {
@@ -267,7 +392,7 @@ function startApp(root, options) {
     actions.appendChild(again);
     actions.appendChild(home);
     card.appendChild(actions);
-    card.appendChild(el("p", { className: "no-record" }, "연습 모드는 순위표에 기록되지 않음"));
+    if (state.mode === "practice") card.appendChild(el("p", { className: "no-record" }, "연습 모드는 순위표에 기록되지 않음"));
     root.appendChild(card);
   }
 
@@ -276,7 +401,7 @@ function startApp(root, options) {
   return {
     getState: () => state,
     getScreen: () => screen,
-    checkTimer: () => {}
+    checkTimer: () => { if (timer) timer.check(); }
   };
 }
 
