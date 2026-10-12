@@ -8,7 +8,7 @@
 
 **Tech Stack:** 순수 HTML/CSS/JavaScript(ES2017, 일반 `<script>`), 테스트는 직접 만든 작은 브라우저 테스트 러너 + Edge headless(`--dump-dom`), 버전 관리는 git.
 
-**Spec:** `PRD.md` (프로젝트 루트)
+**Spec:** `PRD.md` (프로젝트 루트). 문항 작성 규칙은 `CLAUDE.md`
 
 ## Global Constraints
 
