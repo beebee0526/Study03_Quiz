@@ -142,6 +142,92 @@ function createTimer({ seconds, now, onTick, onExpire }) {
   return { start: start, stop: stop, remaining: remaining, check: check };
 }
 
+// ---- 순위표 저장 ----
+
+const BOARD_KEY = "quiz.leaderboard.v1";
+const BOARD_SIZE = 10;
+
+function getStorage() {
+  try {
+    const storage = window.localStorage;
+    const probe = "__quiz_probe__";
+    storage.setItem(probe, "1");
+    storage.removeItem(probe);
+    return storage;
+  } catch (e) {
+    return null;
+  }
+}
+
+function isEntry(value) {
+  return value !== null && typeof value === "object" && typeof value.score === "number";
+}
+
+function readBoardAll(storage) {
+  if (!storage) return {};
+  try {
+    const raw = storage.getItem(BOARD_KEY);
+    if (raw === null) return {};
+    const data = JSON.parse(raw);
+    return data !== null && typeof data === "object" && !Array.isArray(data) ? data : {};
+  } catch (e) {
+    return {};
+  }
+}
+
+function boardKey(category, mode) {
+  return category + "|" + mode;
+}
+
+function boardOf(all, category, mode) {
+  const list = all[boardKey(category, mode)];
+  return Array.isArray(list) ? list.filter(isEntry) : [];
+}
+
+function getBoard(storage, category, mode) {
+  return boardOf(readBoardAll(storage), category, mode);
+}
+
+function qualifies(entries, score) {
+  return entries.length < BOARD_SIZE || score > entries[BOARD_SIZE - 1].score;
+}
+
+function insertEntry(entries, entry) {
+  const list = entries.slice();
+  let at = list.findIndex(e => e.score < entry.score);
+  if (at === -1) at = list.length;
+  list.splice(at, 0, entry);
+  return list.slice(0, BOARD_SIZE);
+}
+
+function saveEntry(storage, category, mode, entry) {
+  if (!storage) return { saved: false, reason: "unavailable" };
+  const all = readBoardAll(storage);
+  const current = boardOf(all, category, mode);
+  if (!qualifies(current, entry.score)) return { saved: false, reason: "not-qualified" };
+  const next = insertEntry(current, entry);
+  all[boardKey(category, mode)] = next;
+  try {
+    storage.setItem(BOARD_KEY, JSON.stringify(all));
+  } catch (e) {
+    return { saved: false, reason: "unavailable" };
+  }
+  return { saved: true, rank: next.indexOf(entry) + 1 };
+}
+
+function normalizeName(raw) {
+  const name = (raw === null || raw === undefined ? "" : String(raw)).trim();
+  if (name === "") return "익명";
+  return Array.from(name).slice(0, 10).join("");
+}
+
+function formatDate(date) {
+  const y = date.getFullYear();
+  const m = String(date.getMonth() + 1).padStart(2, "0");
+  const d = String(date.getDate()).padStart(2, "0");
+  return y + "-" + m + "-" + d;
+}
+
 // ---- UI ----
 
 const MODE_LABELS = { practice: "연습 모드", speed: "스피드 모드", hint: "힌트 모드" };
