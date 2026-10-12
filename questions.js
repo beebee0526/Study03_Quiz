@@ -306,11 +306,11 @@ const QUESTIONS = [
   },
   {
     id: "ac-09", category: "예술과 문화",
-    question: "조선 정조가 아버지 장헌세자(사도세자)의 무덤을 옮긴 뒤 그 일대에 쌓았으며, 실학자 정약용이 설계를 맡은 성곽은?",
-    choices: ["남한산성", "북한산성", "수원 화성", "한양도성"],
-    answer: 2,
-    explanation: "수원 화성은 18세기 말 정조가 방어와 새 정치 기반 마련, 아버지 장헌세자의 유해를 모시기 위해 쌓은 성곽으로, 실학자 정약용이 설계했다.",
-    source: { name: "유네스코 세계유산 'Hwaseong Fortress'", url: "https://whc.unesco.org/en/list/817/" }
+    question: "조선 태종의 명으로 15세기 초에 지어졌으며, 산자락의 지형을 살려 건물을 배치하고 북쪽에 넓은 후원(비원)을 둔 서울의 궁궐은?",
+    choices: ["경복궁", "창덕궁", "덕수궁", "경희궁"],
+    answer: 1,
+    explanation: "창덕궁은 15세기 초 태종의 명으로 경복궁의 이궁으로 지은 궁궐로, 산자락의 지형에 맞춰 건물을 배치하고 북쪽에 후원(비원)을 두었다.",
+    source: { name: "유네스코 세계유산 'Changdeokgung Palace Complex'", url: "https://whc.unesco.org/en/list/816/" }
   },
   {
     id: "ac-10", category: "예술과 문화",
